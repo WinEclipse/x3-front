@@ -20,7 +20,7 @@ export class DataService extends BaseService {
 
   constructor(private httpa: HttpClient) { 
     super(httpa);
-  }
+  } 
 
 
   //GET All : Student
