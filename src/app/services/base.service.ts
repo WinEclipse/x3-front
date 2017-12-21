@@ -7,6 +7,7 @@ import { HttpHeaders, HttpParams } from "@angular/common/http";
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { environment } from '../../environments/environment';
 
+@Injectable()
 export class BaseService {
     public paramsBody = {
         token: "",
@@ -15,30 +16,27 @@ export class BaseService {
         body: {}
     };
 
+    constructor(private http: HttpClient) {
+    }
+
     private options = {
         headers: new HttpHeaders().set('Content-Type', 'application/json').set('Access-Control-Allow-Origin', '*')
             .set('Access-Control-Allow-Credentials', 'true'),
         params: new HttpParams()
     }
 
-    constructor(private http: HttpClient) { }
-
-    post(url: string, params: Observable<any>) {
+    post(url: string, params: any) {
         this.paramsBody.body = params;
-        console.log("post", this.paramsBody);
         return this.http.post(url, this.paramsBody, this.options);
     }
 
     delete(url: string, params: string) {
         this.paramsBody.body = params;
-        console.log(this.paramsBody);
         return this.http.post(url, this.paramsBody, this.options);
     }
 
     get(url: string, params: any) {
         this.paramsBody.body = params;
-        console.log(this.paramsBody);
-        // this.options.params.;
         return this.http.get(url, params);
     }
 

@@ -4,13 +4,13 @@ import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms"
 
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
-import { DataService } from "../../services/data.service";
+import { StudentService } from "../../services/student.service";
 import { Subscription } from "rxjs/Subscription";
 
 @Component({
   selector: 'app-student',
   templateUrl: './student.component.html',
-  styleUrls: ['./student.component.css']
+  styleUrls: ['./student.component.scss']
 })
 export class StudentComponent implements OnInit {
 
@@ -37,7 +37,7 @@ export class StudentComponent implements OnInit {
 
   constructor(
     private modalService: BsModalService,
-    private dataService: DataService,
+    private studentService: StudentService,
     private formBuilder: FormBuilder
   ) { }
 
@@ -60,10 +60,9 @@ export class StudentComponent implements OnInit {
   refreshData() {
 
     //TODO: Get All Student
-    this.dataService.getAllStudents()
+    this.studentService.getAllStudents()
       .subscribe(data => {
         this.students = data;
-        console.log(data);
       });
   }
 
@@ -71,25 +70,27 @@ export class StudentComponent implements OnInit {
   //Add Student
   onStudentAdd(studentData: any) {
 
-    this.dataService.postStudent(studentData)
+    this.studentService.postStudent(studentData)
       .subscribe(
       (res) => {
-        console.log(res);
+        console.log("add student", res);
       },
       (error) => {
         alert('Something went Wrong');
       }
       );
     this.studentData = studentData;
-    console.log(this.studentData);
   }
 
 
-  //Edit Student
+  /**
+   * edit
+   * @param studentData 
+   */
   onStudentEdit(studentData) {
     this.studentData = studentData;
     this.studentData.id = this.id;//from modelEditStudent    
-    this.dataService.putStudentById(this.studentData.id, this.studentData)
+    this.studentService.putStudentById(this.studentData.id, this.studentData)
       .subscribe(
       (res) => console.log(res),
       (error) => console.log(error)
@@ -99,29 +100,34 @@ export class StudentComponent implements OnInit {
 
 
 
-  //Delete Student
-  onStudentDeleteById(id: number) {
-    this.dataService.deleteStudentById(id)
+  /**
+   * delete
+   * @param id 
+   */
+  onStudentDeleteById(id: string) {
+    this.studentService.deleteStudentById(id)
       .subscribe(
-      (res) => console.log(res),
+      (res) => console.log("delete student", res),
       (error) => alert(error)
       );
   }
 
 
-  //Models------>
-
-  //Add Student Model Open
+  /**
+   * add
+   * @param template 
+   */
   public addStudentModel(template: TemplateRef<any>) {
-    // console.log("add student template: " + JSON.stringify(template));
     this.modalRef = this.modalService.show(template);
   }
 
-  //Edit Student Model Open
+  /**
+   * edit
+   * @param template 
+   * @param studentData 
+   */
   editStudentModel(template: TemplateRef<any>, studentData: any) {
-    // this.modalRef = this.modalService.show(template);
     this.id = studentData.id;
-    // console.log(this.id);
     this.name = studentData.name;
     this.email = studentData.email;
     this.age = studentData.age;
@@ -171,10 +177,3 @@ export class StudentComponent implements OnInit {
 
 
 }
-
-
-// interface studentDate{
-//   name: string,
-//   email: string,
-//   age: number;
-// }

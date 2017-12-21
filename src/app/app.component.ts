@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   //组件对应的模板文件路径
   templateUrl: './app.component.html',
   //组件对应的样式文件路径
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
 

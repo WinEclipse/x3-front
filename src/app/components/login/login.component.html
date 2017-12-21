@@ -1,56 +1,48 @@
-<div class="row" *ngIf="user" style="margin-top: 80px;">
-<!-- <div class="row" style="margin-top: 80px;"> -->
-    <div class="col-md-6">
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <!-- <h3 class="panel-title">{{'signin'|translate}}</h3> -->
+<div class="app flex-row align-items-center">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card-group">
+          <div class="card p-4">
+            <div class="card-body" *ngIf="user">
+              <form ng-submit="login()">
+                <h1>用户登录</h1>
+                <p class="text-muted">使用账号密码登录</p>
+                <div class="input-group mb-3">
+                  <span class="input-group-addon">
+                    <i class="icon-user"></i>
+                  </span>
+                  <input type="text" class="form-control" name="username" [(ngModel)]="user.username" placeholder="用户名">
                 </div>
-                <div class="panel-body">
-                    <form class="form form-horizontal" ng-submit="login()">
-                        <div class="form-group">
-                            <label class="control-label col-md-3">用户名</label>
-                            <div class="col-md-6">
-                                <input class="form-control" [(ngModel)]="user.username"  placeholder="username" name="username"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">密码</label>
-
-                            <div class="col-md-6">
-                                <input class="form-control " [(ngModel)]="user.password"type="password" placeholder="password"  name="password"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-offset-3 col-md-6">
-                                <button type="submit" (click)="login()" class="btn btn-primary btn-lg">  登录  
-                                </button>
-                            </div>
-                        </div>
-
-                    </form>
+                <div class="input-group mb-4">
+                  <span class="input-group-addon">
+                    <i class="icon-lock"></i>
+                  </span>
+                  <input type="password" class="form-control" name="password" [(ngModel)]="user.password" placeholder="密码">
                 </div>
+                <div class="row">
+                  <div class="col-6">
+                    <button type="submit" ng-click="login()" class="btn btn-primary px-4">登录</button>
+                  </div>
+                  <div class="col-6 text-right">
+                    <button type="button" class="btn btn-link px-0">忘记密码?</button>
+                  </div>
+                </div>
+              </form>
             </div>
-        </div>
-        <div class="col-md-12 ">
-            <p class="well-sm bg-info"> Login as: <br/>admin/test123(for ADMIN ROLE)<br/> testuser/test123.</p>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-body">
 
-                <div class="text-center" style="padding-top:50px; padding-bottom: 50px;">
-                    <h2>没有账号? 现在注册.</h2>
-                </div>
-
-                <div class="text-center"  style="padding-top:50px; padding-bottom: 50px;">
-                    <a class="btn btn-lg btn-success" href="#/signup">
-                        免费注册
-                    </a>
-                </div>
+          </div>
+          <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
+            <div class="card-body text-center">
+              <div>
+                <h2>注册</h2>
+                <p>欢迎使用X3系统，还没有账号？现在就加入我们吧!!!</p>
+                <button type="button" class="btn btn-primary active mt-3">立即注册</button>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
-

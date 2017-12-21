@@ -1,50 +1,52 @@
 <br>
 <br>
 
-<div class="container text-center">
-  <h3>学生列表</h3>
-</div>
 
 <div class="text-right">
   <button type="button" class="btn btn-primary" (click)="addStudentModel(addStudentTemplate)">添加</button>
 </div>
-<hr>
 
+<div class="card-header">
+  <i class="fa fa-align-justify"></i> 学生列表
+</div>
 
 <!-- 表格 -->
-<table class="table jumbotron">
+<div class="card-body">
+  <table class="table">
 
-  <!-- 表头 -->
-  <thead class="mdb-color darken-3">
-    <tr class="text-black">
-      <th>编号</th>
-      <th>名称</th>
-      <th>Email</th>
-      <th>年龄</th>
-    </tr>
-  </thead>
+    <!-- 表头 -->
+    <thead>
+      <tr>
+        <th>编号</th>
+        <th>名称</th>
+        <th>Email</th>
+        <th>年龄</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <!-- 表头-->
+
+    <!-- 表体-->
+    <tbody>
+      <tr *ngFor="let post of students">
+        <td>{{post.id}}</td>
+        <td>{{post.name | uppercase}} {{post.childLastName}}</td>
+        <td>{{post.email}}</td>
+        <td>{{post.age}}</td>
+        <td>
+
+          <button type="button" class="btn btn-warning btn-sm" (click)="editStudentModel(editStudentTemplate, post)">编辑</button>
+          
+          <button class="btn btn-danger btn-sm" (click)="onStudentDeleteById(post.id)"> 删除 </button>
+        </td>
+      
+      </tr>
+
+    </tbody>
+    <!-- 表体 -->
+  </table>
   <!-- 表头-->
-
-  <!-- 表体-->
-  <tbody>
-    <tr *ngFor="let post of students">
-      <td>{{post.id}}</td>
-      <td>{{post.name | uppercase}} {{post.childLastName}}</td>
-      <td>{{post.email}}</td>
-      <td>{{post.age}}</td>
-      <td>
-
-        <button type="button" class="btn btn-warning btn-sm" (click)="editStudentModel(editStudentTemplate, post)">编辑</button>
-
-      </td>
-      <td><button class="btn btn-danger btn-sm" (click)="onStudentDeleteById(post.id)"> 删除 </button></td>
-    </tr>
-
-  </tbody>
-  <!-- 表体 -->
-</table>
-<!-- 表头-->
-
+</div>
 
 
 
@@ -62,7 +64,7 @@
     <form [formGroup]="fStudentData" (ngSubmit)="onStudentAdd(fStudentData.value)">
       <input type="text" class="form-control" name="name" placeholder="Name" formControlName="name">
       <input type="email" class="form-control" name="email" placeholder="Email" formControlName="email">
-      <input type="text" class="form-control" name="age" placeholder="Age" formControlName="age">
+      <input type="number" class="form-control" name="age" placeholder="Age" formControlName="age">
       <br>
       <button type="submit" class="btn btn-primary" (click)="modalRef.hide()" [disabled]="disabled">添加</button>
     </form>
@@ -74,7 +76,7 @@
 
 
 <!--编辑 Student Model-->
-<ng-template #editStudentTemplate >
+<ng-template #editStudentTemplate>
 
   <div class="modal-header">
     <h4 class="modal-title pull-left">修改Student</h4>
