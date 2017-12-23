@@ -6,6 +6,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { StudentService } from "../../services/student.service";
 import { Subscription } from "rxjs/Subscription";
+import { PaginationComponent } from '../pagination/pagination.component';
 
 @Component({
   selector: 'app-student',
@@ -34,7 +35,6 @@ export class StudentComponent implements OnInit {
   age: number;
 
 
-
   constructor(
     private modalService: BsModalService,
     private studentService: StudentService,
@@ -56,13 +56,14 @@ export class StudentComponent implements OnInit {
   }
 
 
-  //TODO: Refresh Get All Student
+
   refreshData() {
 
-    //TODO: Get All Student
     this.studentService.getAllStudents()
-      .subscribe(data => {
-        this.students = data;
+      .subscribe(resMsg => {
+        console.log("get all students", resMsg);
+        this.students = resMsg.data;
+      
       });
   }
 

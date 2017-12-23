@@ -1,7 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {User} from "../../models/user";
+import { Component, Input, OnInit } from '@angular/core';
+import { User } from "../../models/user";
 import { Router, Params } from '@angular/router';
-import {LoginService} from "../../services/login.service";
+import { LoginService } from "../../services/login.service";
+import { AppComponent } from "../../app.component";
+
 
 @Component({
     selector: 'user-login',
@@ -9,13 +11,13 @@ import {LoginService} from "../../services/login.service";
 })
 
 export class LoginComponent implements OnInit {
-    @Input() user: User;
+    user: User;
     error: any;
     navigated = false; // true if navigated here
 
-
     constructor(
         private loginService: LoginService,
+        private app: AppComponent,
         private router: Router) {
     }
 
@@ -24,18 +26,26 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-        // this.gotoUsersDetail();
         this.loginService
-        .login(this.user)
-        .then(user => {
-            this.user = user; // login user
-            
-        })
-        .catch(error => this.error = error); // TODO: Display error message
+            .login(this.user)
+            .subscribe(
+            (res) => {
+                console.log("login", res);
+                if (1001 != res.status || !res.data.token) {
+                    alert('登录失败');
+                } else {
+                    this.app.setStorage("token", res.data.token);
+                    this.gotoUsersDetail();
+                }
+            },
+            (error) => {
+                alert('Something went Wrong');
+            }
+            );
     }
 
     gotoUsersDetail() {
-        this.router.navigate(['/users']);
+        this.router.navigate(['/student']);
     }
 
 

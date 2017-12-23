@@ -4,6 +4,7 @@ import 'rxjs/add/operator/toPromise';
 import { Observable } from "rxjs/Observable";
 import { environment } from '../../environments/environment';
 import { BaseService } from './base.service';
+import { ResponseMsg } from '../models/response';
 
 @Injectable()
 export class StudentService extends BaseService {
@@ -15,7 +16,7 @@ export class StudentService extends BaseService {
     return this.get(`${environment.appApi.baseUrl}/students`, "");
   }
 
-  postStudent(registerStudent: Observable<any>): Observable<any> {
+  postStudent(registerStudent: Observable<any>): Observable<ResponseMsg> {
     return this.post(`${environment.appApi.baseUrl}/student/`, registerStudent);
   }
 
